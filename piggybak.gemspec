@@ -23,6 +23,6 @@ Gem::Specification.new do |s|
   s.add_dependency "protected_attributes", ">= 1.0"
   s.add_dependency "countries"
   s.add_dependency "activemerchant"
-  s.add_dependency "devise", ">= 3.0.0"
+  s.add_dependency "devise", ">= 3.0.0.rc"
   s.add_dependency "rack-ssl-enforcer"
 end
