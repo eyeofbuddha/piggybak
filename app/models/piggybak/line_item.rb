@@ -7,7 +7,7 @@ module Piggybak
     validates_presence_of :price, :description, :quantity
     validates_numericality_of :quantity, :only_integer => true, :greater_than_or_equal_to => 0
 
-    default_scope :order => 'created_at ASC'
+    default_scope -> {order('created_at ASC')}
 
     after_create :decrease_inventory, :if => Proc.new { |line_item| line_item.line_item_type == 'sellable' && !line_item.sellable.unlimited_inventory }
     after_destroy :increase_inventory, :if => Proc.new { |line_item| line_item.line_item_type == 'sellable' && !line_item.sellable.unlimited_inventory }

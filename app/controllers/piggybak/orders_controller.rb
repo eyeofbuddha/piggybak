@@ -144,7 +144,7 @@ module Piggybak
     end
 
     def geodata
-      countries = ::Piggybak::Country.find(:all, :include => :states)
+      countries = ::Piggybak::Country.all.includes(:states)
       data = countries.inject({}) do |h, country|
         h["country_#{country.id}"] = country.states
         h
