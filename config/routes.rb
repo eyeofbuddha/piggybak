@@ -3,8 +3,8 @@ Piggybak::Engine.routes.draw do
     # cart actions
     get "/cart" => "cart#show", :as => :cart
     post "/cart/add" => "cart#add", :via => :post, :as => :cart_add
-    match "/cart/update" => "cart#update", :via => :post, :as => :cart_update
-    match "/cart/remove/:item" => "cart#remove", :via => :delete, :as => :remove_item
+    post "/cart/update" => "cart#update", :as => :cart_update
+    delete "/cart/remove/:item" => "cart#remove", :as => :remove_item
 
     # order actions
     root :to => 'orders#submit', :as => :orders, :via => [:get, :post]
