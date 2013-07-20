@@ -85,7 +85,7 @@ module Piggybak
     def preprocess_payment
       if self.new_record?
         self.build_payment if self.payment.nil?
-        self.payment.payment_method_id ||= Piggybak::PaymentMethod.find_by_active(true).id
+        self.payment.payment_method_id ||= Piggybak::PaymentMethod.where(active: true).id
         self.description = "Payment"
         self.price = 0
       end
