@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 
 # Declare your gem's dependencies in piggybak_coupons.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -18,3 +18,4 @@ gem "jquery-rails"
 
 gem "countries"
 gem "rack-ssl-enforcer"
+gem "protected_attributes", ">= 1.0"

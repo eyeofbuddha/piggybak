@@ -1,3 +1,6 @@
+require "piggybak/engine"
+require "rails_admin"
+
 require 'piggybak/config'
 require 'acts_as_sellable'
 require 'acts_as_orderer'

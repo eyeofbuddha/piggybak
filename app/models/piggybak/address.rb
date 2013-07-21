@@ -22,7 +22,7 @@ module Piggybak
     attr_accessor :is_shipping
     
     def set_default_country
-      self.country ||= Country.where(abbr: Piggybak.config.default_country)
+      self.country ||= Country.find_by_abbr(Piggybak.config.default_country)
     end
 
     def admin_label
