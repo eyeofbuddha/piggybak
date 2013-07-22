@@ -29,5 +29,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails', '>= 2.14.0'
   s.add_development_dependency 'factory_girl_rails', '>= 4.2.1'
   s.add_development_dependency 'capybara', '>= 2.1.0'
+  s.add_development_dependency "guard", ">= 1.6.2"
   s.add_development_dependency 'guard-rspec', '>= 3.0.2'
+  s.add_development_dependency "rb-fsevent", "~> 0.9.1"
+  s.add_development_dependency "shoulda-matchers", ">= 2.1.0"
+  s.add_development_dependency "launchy", ">= 2.2.0"
 end
