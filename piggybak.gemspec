@@ -13,15 +13,16 @@ Gem::Specification.new do |s|
   s.summary     = "Mountable Ruby on Rails Ecommerce."
   s.description = "Mountable Ruby on Rails Ecommerce."
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
+  s.add_dependency "countries"
+  s.add_dependency "rack-ssl-enforcer"
+  s.add_dependency "activemerchant"
+  s.add_dependency "protected_attributes"
   s.add_dependency "rails", "~> 4.0.0"
   s.add_dependency "rails_admin", "~> 0.5"
-  s.add_dependency "countries"
-  s.add_dependency "activemerchant"
-  s.add_dependency "devise", ">= 3.0.0.rc"
-  s.add_dependency "rack-ssl-enforcer"
+  s.add_dependency "devise", ">= 3.0.0"
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'thor'

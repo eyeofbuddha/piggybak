@@ -12,4 +12,4 @@ gemspec
 
 # To use debugger
 # gem 'debugger'
-gem 'protected_attributes'
+gem "activemerchant", git: 'git://github.com/anthonycollini/active_merchant'
