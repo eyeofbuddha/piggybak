@@ -7,24 +7,22 @@ require "piggybak/version"
 Gem::Specification.new do |s|
   s.name        = "piggybak"
   s.version     = Piggybak::VERSION
-  s.authors     = ["Steph Skardal", "Tim Case", "Brian Buchalter"]
+  s.authors     = ["Steph Skardal", "Tim Case", "Brian Buchalter", "Anthony Collini"]
   s.email       = ["piggybak@endpoint.com"]
   s.homepage    = "http://www.piggybak.org/"
   s.summary     = "Mountable Ruby on Rails Ecommerce."
   s.description = "Mountable Ruby on Rails Ecommerce."
 
-  s.files = Dir["{app,bin,config,db,lib,spec}/**/*"] + ["LICENSE", "Rakefile", "README.md","Gemfile","Gemfile.lock"]
-  s.executables = s.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
-  
-  s.add_dependency "sqlite3"
-  s.add_dependency "rails", "~> 4.0"
+
+  s.add_dependency "rails", "~> 4.0.0"
   s.add_dependency "rails_admin", "~> 0.5"
-  # s.add_dependency "protected_attributes", ">= 1.0"
   s.add_dependency "countries"
   s.add_dependency "activemerchant"
   s.add_dependency "devise", ">= 3.0.0.rc"
   s.add_dependency "rack-ssl-enforcer"
+
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'thor'
   s.add_development_dependency 'rspec-rails', '>= 2.14.0'

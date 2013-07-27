@@ -12,12 +12,12 @@ module Piggybak
       self.errors = []
       cookie ||= ''
       cookie.split(';').each do |item|
-        item_sellable = Piggybak::Sellable.where(id: item.split(':')[0])
+        item_sellable = Piggybak::Sellable.where(id: item.split(':')[0]).first
         if item_sellable.present?
           self.sellables << { :sellable => item_sellable, :quantity => (item.split(':')[1]).to_i }
         end
       end
-      self.total = self.sellables.sum { |item| item[:quantity]*item[:sellable].price }
+      self.total = self.sellables.sum { |item| item[:quantity] * item[:sellable].price }
 
       self.extra_data = {}
     end
@@ -94,5 +94,6 @@ module Piggybak
     def empty?
       self.sellables.inject(0) { |nitems, item| nitems + item[:quantity] } == 0      
     end
+    
   end
 end

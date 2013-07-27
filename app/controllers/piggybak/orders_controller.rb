@@ -9,6 +9,7 @@ module Piggybak
 
         begin
           ActiveRecord::Base.transaction do
+
             @order = Piggybak::Order.new(params[:piggybak_order])
             @order.create_payment_shipment
 
@@ -151,5 +152,26 @@ module Piggybak
       end
       render :json => { :countries => data }
     end
+
+    # private
+
+      # def order_params
+      #   params.require(:piggybak_order).permit(:user_id, 
+      #                                           :email,
+      #                                           :email_confirmation,
+      #                                           :phone,
+      #                                           :ip_address#,
+      #                                           # :shipping_method_id,
+      #                                           # :details,
+      #                                           # :recorded_changer,
+      #                                           # payment_attributes: [:number, :verification_value, :month, :year, :transaction_id, :masked_number, :payment_method_id],
+      #                                           # shipment_attributes: [:shipping_method_id, :status],
+      #                                           # billing_address_attributes: [:firstname, :lastname, :address1, :location, :address2, :city, :state_id, :zip, :country_id, :copy_from_billing],
+      #                                           # shipping_address_attributes: [:firstname, :lastname, :address1, :location, :address2, :city, :state_id, :zip, :country_id, :copy_from_billing],
+      #                                           # line_items_attributes: [:sellable_id, :price, :unit_price, :description, :quantity, :line_item_type],
+      #                                           # order_notes_attributes: [:user_id, :order_id, :note, :created_at]
+      #                                           )
+
+      # end
   end
 end
