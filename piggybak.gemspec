@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "devise", ">= 3.0.0.rc"
   s.add_dependency "rack-ssl-enforcer"
   s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'thor'
   s.add_development_dependency 'rspec-rails', '>= 2.14.0'
   s.add_development_dependency 'factory_girl_rails', '>= 4.2.1'
   s.add_development_dependency 'capybara', '>= 2.1.0'
