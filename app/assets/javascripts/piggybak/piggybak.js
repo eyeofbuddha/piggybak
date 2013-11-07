@@ -123,7 +123,7 @@ var piggybak = {
 	},
 	update_totals: function() {
 		var subtotal = parseFloat($('#subtotal_total').data('total'));
-		$('#tax_total').html('$' + tax_total.toFixed(2));
+		$('#tax_total').html('€' + tax_total.toFixed(2));
 		var shipping_total = 0;
 		if($('#shipping select option:selected').length) {
 			shipping_total = $('#shipping select option:selected').data('rate');
