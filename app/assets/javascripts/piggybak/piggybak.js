@@ -103,7 +103,7 @@ var piggybak = {
 		var billing_data = {};
 		billing_data['reduce_tax_subtotal'] = 0;
 		$('.reduce_tax_subtotal:visible').each(function(i, j) {
-			billing_data['reduce_tax_subtotal'] += parseFloat($(j).html().replace('$', ''));
+			billing_data['reduce_tax_subtotal'] += parseFloat($(j).html().replace('€', ''));
 		});
 		$('#billing_address input, #billing_address select').each(function(i, j) {
 			var id = $(j).attr('id');
@@ -128,12 +128,12 @@ var piggybak = {
 		if($('#shipping select option:selected').length) {
 			shipping_total = $('#shipping select option:selected').data('rate');
 		}
-		$('#shipping_total').html('$' + shipping_total.toFixed(2));
+		$('#shipping_total').html('€' + shipping_total.toFixed(2));
 		var order_total = parseFloat((subtotal + tax_total + shipping_total).toFixed(2));
 		$.each($('.extra_totals'), function(i, el) {
-			order_total += parseFloat($(el).html().replace(/\$/, ''));
+			order_total += parseFloat($(el).html().replace(/\€/, ''));
 		});
-		$('#order_total').html('$' + order_total.toFixed(2));
+		$('#order_total').html('€' + order_total.toFixed(2));
 		return order_total;
 	},
 	retrieve_shipping_data: function() {
