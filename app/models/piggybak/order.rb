@@ -2,6 +2,7 @@ module Piggybak
   class Order < ActiveRecord::Base
     has_many :line_items, :inverse_of => :order
     has_many :order_notes, :inverse_of => :order
+    has_many :sellables, :through => :order_notes
 
     belongs_to :billing_address, :class_name => "Piggybak::Address"
     belongs_to :shipping_address, :class_name => "Piggybak::Address"
