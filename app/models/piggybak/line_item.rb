@@ -119,14 +119,14 @@ module Piggybak
     end
 
     def sellable_id_enum
-      ::Piggybak::Sellable.all.collect { |s| ["#{s.description}: $#{s.price}", s.id ] }
+      ::Piggybak::Sellable.all.collect { |s| ["#{s.description}: &euro;#{s.price}", s.id ] }
     end
 
     def admin_label
       if self.line_item_type == 'sellable'
-        "#{self.quantity} x #{self.description} ($#{sprintf("%.2f", self.unit_price)}): $#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
+        "#{self.quantity} x #{self.description} (&euro#{sprintf("%.2f", self.unit_price)}): &euro#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
       else
-        "#{self.description}: $#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
+        "#{self.description}: &euro#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
       end
     end
 
