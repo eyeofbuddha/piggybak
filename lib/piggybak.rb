@@ -225,11 +225,10 @@ module Piggybak
              
             field :details do
               partial "order_details"
-              associated_collection_cache_all false
               help ""
-              # visible do
-              #   !bindings[:object].new_record?
-              # end
+              visible do
+                !bindings[:object].new_record?
+              end
             end
 
             field :user if defined?(User)
