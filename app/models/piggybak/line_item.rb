@@ -1,5 +1,7 @@
 module Piggybak
   class LineItem < ActiveRecord::Base
+    include ActionView::Helpers
+    include Rails.application.routes.url_helpers
     belongs_to :order
     acts_as_changer
     belongs_to :sellable
@@ -124,7 +126,7 @@ module Piggybak
 
     def admin_label
       if self.line_item_type == 'sellable'
-        "#{self.quantity} x #{self.description} (€#{sprintf("%.2f", self.unit_price)}): €#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
+        "#{self.quantity} x #{link_to self.description, product_url(self.sellable.item)} (€#{sprintf("%.2f", self.unit_price)}): €#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
       else
         "#{self.description}: €#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
       end
