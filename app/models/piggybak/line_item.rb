@@ -124,9 +124,9 @@ module Piggybak
 
     def admin_label
       if self.line_item_type == 'sellable'
-        "#{self.quantity} x #{self.description} (&euro#{sprintf("%.2f", self.unit_price)}): &euro#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
+        "#{self.quantity} x #{self.description} (&euro;#{sprintf("%.2f", self.unit_price)}): &euro;#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
       else
-        "#{self.description}: &euro#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
+        "#{self.description}: &euro;#{sprintf("%.2f", self.price)}".gsub('"', '&quot;')
       end
     end
 
