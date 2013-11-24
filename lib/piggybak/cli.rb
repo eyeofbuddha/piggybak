@@ -13,12 +13,18 @@ module Piggybak
         inject_rails_admin
         run('bundle install')
         run('rake piggybak_engine:install:migrations')
-        run('rake db:migrate')   
+        run('rake db:migrate')
         run('rails generate devise:install')
-        run('rails generate devise User') 
-        run('rake db:migrate')      
-        run('rails g rails_admin:install')
-        run('rake db:migrate')      
+        run('rails generate devise User')
+        run('rake db:migrate')
+        
+        # This was included to prevent rails_admin migrations from having same timestamp as other copied migrations.
+        # It only really adds about 6-8 extra seconds after devise migrations, but reduces errors.
+        puts 'Waiting for Devise to finish...'
+        sleep 20
+
+        run('rails generate rails_admin:install')
+        run('rake db:migrate')
         mount_piggybak_route
         add_javascript_include_tag
         welcome
@@ -48,17 +54,17 @@ module Piggybak
   
     desc "mount_piggybak_route", "mount piggybak route"
     def mount_piggybak_route
-      insert_into_file "config/routes.rb", "\n  mount Piggybak::Engine => '/checkout', :as => 'piggybak'\n", :after => "Application.routes.draw do\n"
+      insert_into_file "config/routes.rb", "\n  mount Piggybak::Engine => '/checkout', :as => 'piggybak'\n", :after => "Rails.application.routes.draw do"
     end
   
     desc "add_javascript_include_tag", "add javascript include tag to application layout"
     def add_javascript_include_tag
       jit_code_block = <<-eos
-          \n  <% if "\#{params[:controller]}#\#\{params[:action]\}" == "piggybak/orders#submit" -%>
-      <%= javascript_include_tag "piggybak/piggybak-application" %>\n  <% end -%>
+        \n  <% if "\#{params[:controller]}#\#\{params[:action]\}" == "piggybak/orders#submit" %>
+      <%= javascript_include_tag "piggybak/piggybak-application" %>\n  <% end %>
       eos
     
-      insert_into_file 'app/views/layouts/application.html.erb', jit_code_block, :after => "<%= javascript_include_tag \"application\" %>"
+      insert_into_file 'app/views/layouts/application.html.erb', jit_code_block, :after => '<%= javascript_include_tag "application", "data-turbolinks-track" => true %>'
     
     end
     

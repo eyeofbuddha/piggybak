@@ -1,12 +1,9 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 
-# Declare your gem's dependencies in piggybak_coupons.gemspec.
+# Declare your gem's dependencies in piggybak.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 gemspec
-
-# jquery-rails is used by the dummy application
-gem "jquery-rails"
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
@@ -15,6 +12,4 @@ gem "jquery-rails"
 
 # To use debugger
 # gem 'debugger'
-
-gem "countries"
-gem "rack-ssl-enforcer"
+gem "activemerchant", git: 'git://github.com/anthonycollini/active_merchant'

@@ -7,7 +7,7 @@ module Piggybak
 
       if object.is_a?(Cart)
         if object.extra_data[:state_id] != ""
-          state = State.find(object.extra_data[:state_id])
+          state = State.where(id: object.extra_data[:state_id]).first
           return state.id == id.to_i if state
         end
       else

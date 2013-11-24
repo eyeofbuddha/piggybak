@@ -131,7 +131,7 @@ var piggybak = {
 		$('#shipping_total').html('€' + shipping_total.toFixed(2));
 		var order_total = parseFloat((subtotal + tax_total + shipping_total).toFixed(2));
 		$.each($('.extra_totals'), function(i, el) {
-			order_total += parseFloat($(el).html().replace(/\€/, ''));
+			order_total += parseFloat($(el).html().replace(/€/, ''));
 		});
 		$('#order_total').html('€' + order_total.toFixed(2));
 		return order_total;

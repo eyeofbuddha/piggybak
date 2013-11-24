@@ -30,7 +30,7 @@ module Piggybak
     end
 
     def self.available_methods(cart)
-      active_methods = ShippingMethod.find_all_by_active(true)
+      active_methods = ShippingMethod.where(active: true)
 
       active_methods.select { |method| method.klass.constantize.available?(method, cart) }
     end
@@ -43,7 +43,7 @@ module Piggybak
         if klass.available?(method, cart)
           rate = klass.rate(method, cart)
           arr << {
-            :label => "#{method.description} $#{"%.2f" % rate}",
+            :label => "#{method.description} &euro;#{"%.2f" % rate}",
             :id => method.id,
             :rate => rate }
           end

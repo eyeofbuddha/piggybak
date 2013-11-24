@@ -1,12 +1,17 @@
+require "piggybak/engine"
+require "rails_admin"
 require 'piggybak/config'
 require 'acts_as_sellable'
 require 'acts_as_orderer'
 require 'acts_as_changer'
-require 'active_merchant'
+require 'countries'
 require 'formatted_changes'
 require 'currency'
 require 'mask_submissions'
-require 'rack-ssl-enforcer'
+require 'active_merchant'
+require "rack-ssl-enforcer"
+
+require 'protected_attributes'
 
 module Piggybak
   def self.config(entity = nil, &block)
@@ -220,6 +225,7 @@ module Piggybak
              
             field :details do
               partial "order_details"
+              associated_collection_cache_all false
               help ""
               # visible do
               #   !bindings[:object].new_record?

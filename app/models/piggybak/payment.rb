@@ -9,8 +9,7 @@ module Piggybak
     validates_presence_of :month
     validates_presence_of :year
 
-    attr_accessor :number
-    attr_accessor :verification_value
+    attr_accessor :number, :verification_value
 
     attr_accessible :number, :verification_value, :month, :year,
                     :transaction_id, :masked_number, :payment_method_id
