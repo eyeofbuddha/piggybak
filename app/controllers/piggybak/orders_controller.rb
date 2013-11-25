@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Piggybak
   class OrdersController < ApplicationController
     def submit
@@ -29,7 +30,7 @@ module Piggybak
             end
             @order.initialize_user(current_user)
 
-            @order.ip_address = request.remote_ip 
+            @order.ip_address = request.remote_ip.to_s.encode('utf-8') 
             @order.user_agent = request.user_agent  
             @order.add_line_items(@cart)
 
