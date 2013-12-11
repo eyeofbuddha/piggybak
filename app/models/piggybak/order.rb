@@ -209,5 +209,17 @@ module Piggybak
     def admin_label
       "Order ##{self.id}"    
     end
+
+    def total_order_display
+      self.total = 0
+      self.line_items.each do |line_item|
+        next if line_item.line_item_type == "payment"
+        if !line_item._destroy && 
+          self.total += line_item.price
+        end
+      end
+      total
+    end
+
   end
 end
