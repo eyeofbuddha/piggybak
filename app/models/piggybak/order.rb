@@ -172,18 +172,15 @@ module Piggybak
     def update_status
       return if self.status == "cancelled"  # do nothing
 
-      if self.total_due != 0.00
-        self.status = "unbalanced" 
+
+      if self.to_be_cancelled
+        self.status = "cancelled"
+      elsif line_items.shipments.any? && line_items.shipments.all? { |li| li.shipment.status == "shipped" }
+        self.status = "shipped"
+      elsif line_items.shipments.any? && line_items.shipments.all? { |li| li.shipment.status == "processing" }
+        self.status = "processing"
       else
-        if self.to_be_cancelled
-          self.status = "cancelled"
-        elsif line_items.shipments.any? && line_items.shipments.all? { |li| li.shipment.status == "shipped" }
-          self.status = "shipped"
-        elsif line_items.shipments.any? && line_items.shipments.all? { |li| li.shipment.status == "processing" }
-          self.status = "processing"
-        else
-          self.status = "new"
-        end
+        self.status = "new"
       end
     end
 
