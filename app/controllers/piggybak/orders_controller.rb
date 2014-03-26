@@ -55,7 +55,7 @@ module Piggybak
           end
         rescue Exception => e
           if Piggybak.config.logging
-            logger.warn "#{request.remote_ip}:#{Time.now.strftime("%Y-%m-%d %H:%M")} Order exception: #{e.inspect}, #{e.message}"
+            logger.warn "#{request.remote_ip}:#{Time.now.strftime("%Y-%m-%d %H:%M")} Order exception Pote: #{e.inspect}, #{e.message}, #{e.backtrace}"
           end
           if @order.errors.empty?
             @order.errors[:base] << "Your order could not go through. Please try again."
