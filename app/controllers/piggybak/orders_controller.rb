@@ -1,6 +1,44 @@
 # encoding: utf-8
 module Piggybak
   class OrdersController < ApplicationController
+
+    load_and_authorize_resource
+    
+    def index
+      @orders = Piggybak::Order.all.page params[:page]
+    end
+
+    def show
+      @order = Piggybak::Order.includes(:line_items).find(params[:id])
+    end
+
+    def edit
+      @order = Piggybak::Order.includes(:line_items).find(params[:id])
+    end
+
+    def update
+      @order = Piggybak::Order.includes(:line_items).find(params[:id])
+      
+      if params[:piggybak_order][:status] != 'cancelled'
+        @shipment = @order.line_items.shipments.first.shipment
+        @shipment.status = params[:piggybak_order][:status] 
+      end
+      @order.status = params[:piggybak_order][:status] 
+      if @order.save
+        redirect_to orders_path
+      else
+        render 'edit'
+      end
+    end
+
+    def destroy
+      @order = Piggybak::Order.find(params[:id])
+      @order.destroy
+      redirect_to :action => "index"
+    end
+
+
+
     def submit
       response.headers['Cache-Control'] = 'no-cache'
       @cart = Piggybak::Cart.new(request.cookies["cart"])
@@ -10,9 +48,7 @@ module Piggybak
 
         begin
           ActiveRecord::Base.transaction do
-
             @order = Piggybak::Order.new(params[:piggybak_order])
-            @order.create_payment_shipment
 
             if Piggybak.config.logging
               clean_params = params[:piggybak_order].clone
@@ -33,6 +69,13 @@ module Piggybak
             @order.ip_address = request.remote_ip.to_s.encode('utf-8') 
             @order.user_agent = request.user_agent  
             @order.add_line_items(@cart)
+            my_order_total = @order.total_order_display
+            if Piggybak.config.logging
+              logger.info "Order Total:#{@order.total_order_display}"
+            end
+
+
+            @order.create_payment_shipment
 
             if Piggybak.config.logging
               logger.info "#{request.remote_ip}:#{Time.now.strftime("%Y-%m-%d %H:%M")} Order contains: #{cookies["cart"]} for user #{current_user ? current_user.email : 'guest'}"
@@ -56,6 +99,10 @@ module Piggybak
         rescue Exception => e
           if Piggybak.config.logging
             logger.warn "#{request.remote_ip}:#{Time.now.strftime("%Y-%m-%d %H:%M")} Order exception Pote: #{e.inspect}, #{e.message}, #{e.backtrace}"
+            ExceptionNotifier.notify_exception(e,
+    :env => request.env, :data => {:message => "was doing something wrong"})
+
+          # logger.warn "#{request.remote_ip}:#{Time.now.strftime("%Y-%m-%d %H:%M")} Order exception Pote: #{e.inspect}, #{e.message}, #{e.backtrace}"
           end
           if @order.errors.empty?
             @order.errors[:base] << "Your order could not go through. Please try again."
@@ -76,7 +123,7 @@ module Piggybak
         return
       end
 
-      @order = Piggybak::Order.find(session[:last_order])
+      @order = Piggybak::Order.includes(:line_items).find(session[:last_order])
     end
 
     def list
@@ -153,26 +200,5 @@ module Piggybak
       end
       render :json => { :countries => data }
     end
-
-    # private
-
-    #   def order_params
-    #     params.require(:piggybak_order).permit(:user_id, 
-    #                                             :email,
-    #                                             :email_confirmation,
-    #                                             :phone,
-    #                                             :ip_address,
-    #                                             :shipping_method_id,
-    #                                             :details,
-    #                                             :recorded_changer,
-    #                                             payment_attributes: [:number, :verification_value, :month, :year, :transaction_id, :masked_number, :payment_method_id],
-    #                                             shipment_attributes: [:shipping_method_id, :status],
-    #                                             billing_address_attributes: [:firstname, :lastname, :address1, :location, :address2, :city, :state_id, :zip, :country_id, :copy_from_billing],
-    #                                             shipping_address_attributes: [:firstname, :lastname, :address1, :location, :address2, :city, :state_id, :zip, :country_id, :copy_from_billing],
-    #                                             line_items_attributes: [:sellable_id, :price, :unit_price, :description, :quantity, :line_item_type],
-    #                                             order_notes_attributes: [:user_id, :order_id, :note, :created_at]
-    #                                             )
-
-    #   end
   end
 end
